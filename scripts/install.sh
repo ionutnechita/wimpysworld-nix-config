@@ -12,7 +12,7 @@ else
 fi
 
 case "${TARGET_HOST}" in
-  designare*|vm) true;;
+  designare*|vm|ionutnechita*) true;;
   *)
     echo "ERROR! ${TARGET_HOST} is not a supported host"
     exit 1
@@ -28,7 +28,7 @@ else
 fi
 
 case "${TARGET_USER}" in
-  martin) true;;
+  martin|ionutnechita) true;;
   *)
     echo "ERROR! ${TARGET_USER} is not a supported user"
     exit 1

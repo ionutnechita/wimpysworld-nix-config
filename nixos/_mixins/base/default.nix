@@ -27,6 +27,7 @@
     v4l-utils
     wget
     xdg-utils
+    htop
   ];
 
   # Use passed in hostid and hostname to configure basic networking

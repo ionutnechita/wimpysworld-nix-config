@@ -11,7 +11,6 @@
       #defaultNetwork.settings.dns_enabled = true;
       dockerCompat = true;
       enable = true;
-      enableNvidia = lib.elem "nvidia" config.services.xserver.videoDrivers;
     };
   };
 }

@@ -1,7 +1,7 @@
 {
   description = "Wimpy's NixOS and Home Manager Configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # You can access packages and modules from different nixpkgs revs at the
     # same time. See 'unstable-packages' overlay in 'overlays/default.nix'.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -36,7 +36,7 @@
         "x86_64-darwin"
       ];
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-      stateVersion = "22.11";
+      stateVersion = "unstable";
     in
     rec {
       # Custom packages; acessible via 'nix build', 'nix shell', etc
@@ -64,7 +64,19 @@
             hostname = "designare";
             username = "martin";
           };
-          modules = [ ./home ];
+          modules = [ ./home-manager ];
+        };
+
+        # home-manager switch -b backup --flake $HOME/Zero/nix-config
+        "ionutnechita@ionutnechita-arz2022" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs stateVersion;
+            desktop = "pantheon";
+            hostname = "ionutnechita-arz2022";
+            username = "ionutnechita";
+          };
+          modules = [ ./home-manager ];
         };
 
         "martin@designare-headless" = home-manager.lib.homeManagerConfiguration {
@@ -160,6 +172,18 @@
             hostid = "8f03b646";
             hostname = "designare";
             username = "martin";
+          };
+          modules = [ ./nixos ];
+        };
+
+        ionutnechita-arz2022 = nixpkgs.lib.nixosSystem {
+          # sudo nixos-rebuild switch --flake $HOME/Zero/nix-config
+          specialArgs = {
+            inherit inputs outputs stateVersion;
+            desktop = "pantheon";
+            hostid = "8f03b64a";
+            hostname = "ionutnechita-arz2022";
+            username = "ionutnechita";
           };
           modules = [ ./nixos ];
         };
